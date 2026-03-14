@@ -69,6 +69,7 @@ services:
       DATABASE_URL: postgresql+asyncpg://jobradar:${POSTGRES_PASSWORD:-secret}@postgres:5432/jobradar
       REDIS_URL: redis://redis:6379/0
       ELASTICSEARCH_URL: http://elasticsearch:9200
+      PYTHONPATH: /app
     ports:
       - "8000:8000"
     depends_on:
@@ -79,6 +80,8 @@ services:
       elasticsearch:
         condition: service_healthy
     restart: unless-stopped
+    volumes:
+      - .:/app
 
   worker:
     build:
@@ -132,3 +135,4 @@ volumes:
   postgres_data:
   redis_data:
   es_data:
+ 
